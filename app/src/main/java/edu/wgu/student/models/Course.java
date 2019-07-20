@@ -1,17 +1,7 @@
-package edu.wgu.students.models;
+package edu.wgu.student.models;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-
-/**
- * CourseStatus
- */
-public enum CourseStatus {
-    IN_PROGRESS,
-    COMPLETED, 
-    DROPPED, 
-    PLANNED,
-};
 
 /**
  * Course

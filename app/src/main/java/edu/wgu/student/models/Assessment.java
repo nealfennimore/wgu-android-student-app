@@ -1,12 +1,6 @@
-package edu.wgu.students.models;
+package edu.wgu.student.models;
 
 import java.time.LocalDateTime;
-
-public enum AssessmentType {
-    OBJECTIVE,
-    PERFORMANCE,
-};
-
 
 /**
  * Assessment

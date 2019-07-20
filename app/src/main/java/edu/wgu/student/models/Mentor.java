@@ -1,4 +1,4 @@
-package edu.wgu.students.models;
+package edu.wgu.student.models;
 
 import java.util.ArrayList;
 
