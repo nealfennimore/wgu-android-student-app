@@ -4,7 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.Ignore;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * Assessment
@@ -15,17 +15,25 @@ public class AssessmentEntity {
     private int id;
     private String title;
     private AssessmentType type;
-    private LocalDateTime dueDate;
+    private Date dueDate;
 
     @Ignore
     public AssessmentEntity() {
     }
 
-    public AssessmentEntity(int id, String title, AssessmentType type, LocalDateTime dueDate){
+    public AssessmentEntity(int id, String title, AssessmentType type, Date dueDate){
         this.id = id;
         this.title = title;
         this.type = type;
         this.dueDate = dueDate;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -59,14 +67,14 @@ public class AssessmentEntity {
     /**
      * @return the dueDate
      */
-    public LocalDateTime getDueDate() {
+    public Date getDueDate() {
         return dueDate;
     }
 
     /**
      * @param dueDate the dueDate to set
      */
-    public void setDueDate(LocalDateTime dueDate) {
+    public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
 

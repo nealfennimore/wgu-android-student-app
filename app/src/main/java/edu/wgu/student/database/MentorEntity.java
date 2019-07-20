@@ -3,7 +3,7 @@ package edu.wgu.student.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.Ignore;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Mentor
@@ -13,21 +13,27 @@ public class MentorEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    private ArrayList<String> phones;
-    private ArrayList<String> emails;
+    private String phone;
+    private String email;
 
-    public MentorEntity( int id, String name, ArrayList<String> phones, ArrayList<String> emails ){
+    public MentorEntity( int id, String name, String phone, String email ){
         this.id = id;
         this.name = name;
-        this.phones = phones;
-        this.emails = emails;
+        this.phone = phone;
+        this.email = email;
     }
 
     @Ignore
     public MentorEntity( int id, String name ){
         this.name = name;
-        this.phones = new ArrayList<String>();
-        this.emails = new ArrayList<String>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**
@@ -45,31 +51,31 @@ public class MentorEntity {
     }
 
     /**
-     * @return the phones
+     * @return the phone
      */
-    public ArrayList<String> getPhones() {
-        return phones;
+    public String getPhones() {
+        return phone;
     }
 
     /**
-     * @param phones the phones to set
+     * @param phone the phone to set
      */
-    public void setPhones(ArrayList<String> phones) {
-        this.phones = phones;
+    public void setPhones(String phone) {
+        this.phone = phone;
     }
 
     /**
-     * @return the emails
+     * @return the email
      */
-    public ArrayList<String> getEmails() {
-        return emails;
+    public String getEmails() {
+        return email;
     }
 
     /**
-     * @param emails the emails to set
+     * @param email the email to set
      */
-    public void setEmails(ArrayList<String> emails) {
-        this.emails = emails;
+    public void setEmails(String email) {
+        this.email = email;
     }
 
     @Override
@@ -77,8 +83,8 @@ public class MentorEntity {
         return "MentorEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", phones=" + phones +
-                ", emails=" + emails +
+                ", phone=" + phone +
+                ", email=" + email +
                 '}';
     }
 }
