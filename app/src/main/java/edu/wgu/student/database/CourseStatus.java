@@ -1,4 +1,4 @@
-package edu.wgu.student.models;
+package edu.wgu.student.database;
 
 /**
  * CourseStatus

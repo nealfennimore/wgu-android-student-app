@@ -1,16 +1,28 @@
-package edu.wgu.student.models;
+package edu.wgu.student.database;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.Ignore;
 
 import java.time.LocalDateTime;
 
 /**
  * Assessment
  */
-public class Assessment {
+@Entity(tableName = "assessment")
+public class AssessmentEntity {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private AssessmentType type;
     private LocalDateTime dueDate;
 
-    public Assessment(String title, AssessmentType type, LocalDateTime dueDate){
+    @Ignore
+    public AssessmentEntity() {
+    }
+
+    public AssessmentEntity(int id, String title, AssessmentType type, LocalDateTime dueDate){
+        this.id = id;
         this.title = title;
         this.type = type;
         this.dueDate = dueDate;
@@ -56,5 +68,15 @@ public class Assessment {
      */
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
+    }
+
+    @Override
+    public String toString() {
+        return "AssessmentEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", type=" + type +
+                ", dueDate=" + dueDate +
+                '}';
     }
 }

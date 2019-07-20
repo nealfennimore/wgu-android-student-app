@@ -1,16 +1,27 @@
-package edu.wgu.students.models;
+package edu.wgu.student.database;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.Ignore;
 import java.time.LocalDateTime;
 
 /**
  * Term
  */
-public class Term {
+@Entity(tableName = "term")
+public class TermEntity {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    public Term(String title, LocalDateTime startDate, LocalDateTime endDate) {
+    @Ignore
+    public TermEntity() {
+    }
+
+    public TermEntity(int id, String title, LocalDateTime startDate, LocalDateTime endDate) {
+        this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;       
@@ -56,5 +67,15 @@ public class Term {
      */
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TermEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                '}';
     }
 }

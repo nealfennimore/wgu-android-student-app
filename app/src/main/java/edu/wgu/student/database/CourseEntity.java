@@ -1,4 +1,8 @@
-package edu.wgu.student.models;
+package edu.wgu.student.database;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.Ignore;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -6,15 +10,23 @@ import java.util.ArrayList;
 /**
  * Course
  */
-public class Course {
+@Entity(tableName = "course")
+public class CourseEntity {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String title;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private CourseStatus status;
-    private Mentor mentor;
+    private MentorEntity mentor;
     private ArrayList<Assessment> assessments;
 
-    public Course(String title, LocalDateTime startDate, LocalDateTime endDate, CourseStatus status, Mentor mentor, ArrayList<Assessment> assessments) {
+    @Ignore
+    public CourseEntity() {
+    }
+
+    public CourseEntity(int id, String title, LocalDateTime startDate, LocalDateTime endDate, CourseStatus status, MentorEntity mentor, ArrayList<Assessment> assessments) {
+        this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -23,7 +35,8 @@ public class Course {
         this.assessments = assessments;
     }
 
-    public Course(String title, LocalDateTime startDate, LocalDateTime endDate, CourseStatus status, Mentor mentor ) {
+    @Ignore
+    public CourseEntity(String title, LocalDateTime startDate, LocalDateTime endDate, CourseStatus status, MentorEntity mentor ) {
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -91,14 +104,14 @@ public class Course {
     /**
      * @return the mentor
      */
-    public Mentor getMentor() {
+    public MentorEntity getMentor() {
         return mentor;
     }
 
     /**
      * @param mentor the mentor to set
      */
-    public void setMentor(Mentor mentor) {
+    public void setMentor(MentorEntity mentor) {
         this.mentor = mentor;
     }
 
@@ -114,5 +127,18 @@ public class Course {
      */
     public void setAssessments(ArrayList<Assessment> assessments) {
         this.assessments = assessments;
+    }
+
+    @Override
+    public String toString() {
+        return "CourseEntity{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status=" + status +
+                ", mentor=" + mentor +
+                ", assessments=" + assessments +
+                '}';
     }
 }

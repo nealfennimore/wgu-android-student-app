@@ -1,0 +1,35 @@
+package edu.wgu.student.database;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface TermDao {
+
+    @Insert( onConflict = OnConflictStrategy.REPLACE)
+    void insertTerm(TermEntity term);
+
+    @Insert( onConflict = OnConflictStrategy.REPLACE)
+    void insertAll(List<TermEntity> terms);
+
+    @Delete
+    void deleteTerm( TermEntity term );
+
+    @Query("SELECT * FROM term WHERE id = :id")
+    TermEntity getTermById(int id);
+
+    @Query("SELECT * FROM term")
+    LiveData<List<TermEntity>> getAll();
+
+    @Query("DELETE FROM term")
+    int deleteAll();
+
+    @Query("SELECT COUNT(*) FROM term")
+    int getCount();
+}

@@ -1,22 +1,30 @@
-package edu.wgu.student.models;
+package edu.wgu.student.database;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.Ignore;
 import java.util.ArrayList;
 
 /**
  * Mentor
  */
-public class Mentor {
+@Entity(tableName = "mentor")
+public class MentorEntity {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
     private String name;
     private ArrayList<String> phones;
     private ArrayList<String> emails;
 
-    public Mentor( String name, ArrayList<String> phones, ArrayList<String> emails ){
+    public MentorEntity( int id, String name, ArrayList<String> phones, ArrayList<String> emails ){
+        this.id = id;
         this.name = name;
         this.phones = phones;
         this.emails = emails;
     }
 
-    public Mentor( String name ){
+    @Ignore
+    public MentorEntity( int id, String name ){
         this.name = name;
         this.phones = new ArrayList<String>();
         this.emails = new ArrayList<String>();
@@ -62,5 +70,15 @@ public class Mentor {
      */
     public void setEmails(ArrayList<String> emails) {
         this.emails = emails;
+    }
+
+    @Override
+    public String toString() {
+        return "MentorEntity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", phones=" + phones +
+                ", emails=" + emails +
+                '}';
     }
 }
