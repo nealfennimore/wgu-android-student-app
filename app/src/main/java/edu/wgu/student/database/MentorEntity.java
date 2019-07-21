@@ -24,7 +24,7 @@ public class MentorEntity {
     }
 
     @Ignore
-    public MentorEntity( int id, String name ){
+    public MentorEntity( String name ){
         this.name = name;
     }
 
@@ -53,28 +53,28 @@ public class MentorEntity {
     /**
      * @return the phone
      */
-    public String getPhones() {
+    public String getPhone() {
         return phone;
     }
 
     /**
      * @param phone the phone to set
      */
-    public void setPhones(String phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
     /**
      * @return the email
      */
-    public String getEmails() {
+    public String getEmail() {
         return email;
     }
 
     /**
      * @param email the email to set
      */
-    public void setEmails(String email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
