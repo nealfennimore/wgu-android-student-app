@@ -3,6 +3,7 @@ package edu.wgu.student.database;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.Ignore;
+
 import java.util.Date;
 
 /**
@@ -24,7 +25,7 @@ public class TermEntity {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
-        this.endDate = endDate;       
+        this.endDate = endDate;
     }
 
     public int getId() {
@@ -69,7 +70,7 @@ public class TermEntity {
     public Date getEndDate() {
         return endDate;
     }
-    
+
     /**
      * @param endDate the endDate to set
      */
