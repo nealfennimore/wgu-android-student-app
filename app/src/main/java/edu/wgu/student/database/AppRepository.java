@@ -24,6 +24,14 @@ public class AppRepository {
         mDb = AppDatabase.getInstance(context);
     }
 
+    public AppDatabase getDB() {
+        return mDb;
+    }
+
+    public Executor getExecutor() {
+        return executor;
+    }
+
     public void addSampleData() {
         executor.execute(new Runnable() {
             @Override
