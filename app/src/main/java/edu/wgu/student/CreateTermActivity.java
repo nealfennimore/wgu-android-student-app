@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.concurrent.Executor;
 
 import edu.wgu.student.database.TermEntity;
+import edu.wgu.student.utilities.DateHelper;
 import edu.wgu.student.viewmodel.CreateTermViewModel;
 
 public class CreateTermActivity extends AppCompatActivity {
@@ -51,12 +52,11 @@ public class CreateTermActivity extends AppCompatActivity {
         TextView tvTermName = findViewById(R.id.termName);
         String termName = tvTermName.getText().toString();
 
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
         TextView tvStartDate = findViewById(R.id.startDate);
         TextView tvEndDate = findViewById(R.id.endDate);
 
-        Date startDate = (Date)formatter.parse(tvStartDate.getText().toString());
-        Date endDate = (Date)formatter.parse(tvEndDate.getText().toString());
+        Date startDate = DateHelper.toDate(tvStartDate.getText().toString());
+        Date endDate = DateHelper.toDate(tvEndDate.getText().toString());
 
         executor.execute(new Runnable() {
             @Override

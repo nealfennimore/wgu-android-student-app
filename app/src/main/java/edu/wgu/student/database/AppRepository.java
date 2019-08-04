@@ -39,7 +39,7 @@ public class AppRepository {
                 Log.i("SAMPLE_DATA", "Adding in sample data");
                 mDb.mentorDao().insertMentor(new MentorEntity(1, "Neal", "99999999999", "cool@cool.com" ));
                 mDb.termDao().insertTerm(new TermEntity(1, "Term", new Date(), new Date()));
-                mDb.courseDao().insertCourse(new CourseEntity(1, "Course", new Date(), new Date(), CourseStatus.IN_PROGRESS));
+                mDb.courseDao().insertCourse(new CourseEntity(2, "Course 2", new Date(), new Date(), CourseStatus.IN_PROGRESS));
                 mDb.assessmentDao().insertAssessment(new AssessmentEntity(1, "Assessment", AssessmentType.OBJECTIVE, new Date()));
                 Log.i("SAMPLE_DATA", "Done adding sample data");
 
