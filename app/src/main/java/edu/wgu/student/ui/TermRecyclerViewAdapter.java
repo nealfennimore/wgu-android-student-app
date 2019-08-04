@@ -62,7 +62,8 @@ public class TermRecyclerViewAdapter extends RecyclerView.Adapter<TermRecyclerVi
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+            int position = getAdapterPosition();
+            if (mClickListener != null) mClickListener.onItemClick(view, getItem(position), position);
         }
     }
 
@@ -78,6 +79,6 @@ public class TermRecyclerViewAdapter extends RecyclerView.Adapter<TermRecyclerVi
 
     // parent activity will implement this method to respond to click events
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(View view, TermEntity item, int position);
     }
 }

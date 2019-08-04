@@ -22,7 +22,7 @@ public interface TermDao {
     void deleteTerm( TermEntity term );
 
     @Query("SELECT * FROM term WHERE id = :id")
-    TermEntity getTermById(int id);
+    LiveData<TermEntity> getTermById(int id);
 
     @Query("SELECT * FROM term")
     LiveData<List<TermEntity>> getAll();
