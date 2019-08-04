@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.Executor;
 
 import edu.wgu.student.database.CourseEntity;
@@ -24,7 +26,7 @@ import edu.wgu.student.ui.TermRecyclerViewAdapter;
 import edu.wgu.student.utilities.DateHelper;
 import edu.wgu.student.viewmodel.MainViewModel;
 import edu.wgu.student.viewmodel.ShowTermViewModel;
-
+@TargetApi(24)
 public class ShowTermActivity extends AppCompatActivity {
     private ShowTermViewModel mViewModel;
     private int termId;
@@ -33,8 +35,6 @@ public class ShowTermActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_term);
-
-        Log.i("IJ", "ije");
 
         initViewModel();
         initTerm();
@@ -60,6 +60,12 @@ public class ShowTermActivity extends AppCompatActivity {
             public void run() {
                 TermEntity term = new TermEntity(termId, termName, startDate, endDate);
                 mViewModel.updateTerm(term);
+                List<Integer> courseIds = mViewModel.getSelectedCourseIds();
+
+                courseIds.forEach(courseId -> {
+                    mViewModel.insertTermCourseJoin(termId, courseId);
+                });
+
                 startActivity(intent);
             }
         });
@@ -97,21 +103,18 @@ public class ShowTermActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        final CourseCheckboxRecyclerViewAdapter adapter = new CourseCheckboxRecyclerViewAdapter(this);
-        mViewModel.getAllCourses().observe(this, courses -> adapter.setData(courses));
-        adapter.setClickListener(new ShowTermActivity.CourseClicker());
+        final CourseCheckboxRecyclerViewAdapter adapter = new CourseCheckboxRecyclerViewAdapter(this, mViewModel);
+        mViewModel.getSelectedCoursesForTerm(termId).observe(this, selectedCourses -> {
+            mViewModel.setInitialSelectedCourses(selectedCourses);
+            mViewModel.setSelectedCourses(selectedCourses);
+
+            mViewModel.getAllCourses().observe(this, courses -> adapter.setData(courses));
+        });
         recyclerView.setAdapter(adapter);
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this)
                 .get(ShowTermViewModel.class);
-    }
-
-    public class CourseClicker implements CourseCheckboxRecyclerViewAdapter.ItemClickListener{
-        @Override
-        public void onItemClick(View view, CourseEntity course, int position) {
-            Log.i("COURSE_ENTITY", course.getTitle());
-        }
     }
 }

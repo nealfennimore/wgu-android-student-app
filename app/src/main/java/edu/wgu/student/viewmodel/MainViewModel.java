@@ -24,6 +24,8 @@ public class MainViewModel extends AndroidViewModel {
         mRepo = AppRepository.getInstance(application.getApplicationContext());
         mDb = mRepo.getDB();
         executor = mRepo.getExecutor();
+
+//        mRepo.addSampleData();
     }
 
 

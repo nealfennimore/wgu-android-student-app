@@ -1,5 +1,6 @@
 package edu.wgu.student.ui;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,23 +9,28 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.lifecycle.AndroidViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import edu.wgu.student.R;
 import edu.wgu.student.database.CourseEntity;
+import edu.wgu.student.viewmodel.ShowTermViewModel;
 
+@TargetApi(24)
 public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<CourseCheckboxRecyclerViewAdapter.ViewHolder> {
+    private ShowTermViewModel model;
 
     private List<CourseEntity> mData = new ArrayList<>();
     private LayoutInflater mInflater;
-    private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    public CourseCheckboxRecyclerViewAdapter(Context context) {
+    public CourseCheckboxRecyclerViewAdapter(Context context, ShowTermViewModel model) {
         this.mInflater = LayoutInflater.from(context);
+        this.model = model;
     }
 
     public void setData(List<CourseEntity> newData) {
@@ -44,7 +50,7 @@ public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<Cour
     public void onBindViewHolder(ViewHolder holder, int position) {
         CourseEntity course = mData.get(position);
         holder.checkboxView.setText(course.getTitle());
-        holder.checkboxView.setChecked(true);
+        holder.checkboxView.setChecked(model.getInitialSelectedCourses().contains(course.getId()));
     }
 
     // total number of rows
@@ -61,29 +67,29 @@ public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<Cour
         ViewHolder(View itemView) {
             super(itemView);
             checkboxView = itemView.findViewById(R.id.courseName);
-            itemView.setOnClickListener(this);
+            checkboxView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
-            Log.i("CLUEJD", "TREY");
-            if (mClickListener != null) mClickListener.onItemClick(view, getItem(position), position);
+            CourseEntity course = getItem(position);
+            List<Integer> currentSelectedIds = getCurrentSelectedIds();
+
+            if( currentSelectedIds.contains(course.getId())){
+                model.getSelectedCourses().removeIf(selected -> selected.getId() == course.getId());
+            } else {
+                model.getSelectedCourses().add(course);
+            }
         }
     }
 
-    // convenience method for getting data at click position
     public CourseEntity getItem(int id) {
         return mData.get(id);
     }
-
-    // allows clicks events to be caught
-    public void setClickListener(ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(View view, CourseEntity item, int position);
+    public List<Integer> getCurrentSelectedIds() {
+        return model.getSelectedCourses().stream()
+                .map( course -> course.getId() )
+                .collect(Collectors.toList());
     }
 }
