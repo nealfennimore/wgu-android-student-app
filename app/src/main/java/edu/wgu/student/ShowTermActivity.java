@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
+import java.util.stream.Collectors;
 
 import edu.wgu.student.database.CourseEntity;
 import edu.wgu.student.database.TermEntity;
@@ -61,9 +62,22 @@ public class ShowTermActivity extends AppCompatActivity {
                 TermEntity term = new TermEntity(termId, termName, startDate, endDate);
                 mViewModel.updateTerm(term);
                 List<Integer> courseIds = mViewModel.getSelectedCourseIds();
+                List<Integer> initialCourseIds = mViewModel.getInitialSelectedCourses();
 
-                courseIds.forEach(courseId -> {
+                List<Integer> courseIdsToAdd = courseIds.stream()
+                    .filter( courseId -> ! initialCourseIds.contains(courseId))
+                    .collect(Collectors.toList());
+
+                List<Integer> courseIdsToRemove = initialCourseIds.stream()
+                        .filter( courseId -> ! courseIds.contains(courseId))
+                        .collect(Collectors.toList());
+
+                courseIdsToAdd.forEach(courseId -> {
                     mViewModel.insertTermCourseJoin(termId, courseId);
+                });
+
+                courseIdsToRemove.forEach(courseId -> {
+                    mViewModel.deleteTermCourseJoin(termId, courseId);
                 });
 
                 startActivity(intent);

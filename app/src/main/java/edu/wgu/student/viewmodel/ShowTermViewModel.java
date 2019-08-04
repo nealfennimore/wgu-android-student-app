@@ -74,4 +74,7 @@ public class ShowTermViewModel extends AndroidViewModel {
     public void insertTermCourseJoin(int termId, int courseId) {
         mDb.termCourseJoinDao().insert(new TermCourseJoinEntity(termId, courseId));
     }
+    public void deleteTermCourseJoin(int termId, int courseId) {
+        mDb.termCourseJoinDao().delete(termId, courseId);
+    }
 }
