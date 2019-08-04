@@ -45,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
                     .get(MainViewModel.class);
     }
 
+    private void onAddTermClick(){
+
+    }
+
     private void onTermClick(TermEntity term) {
         Intent intent = new Intent(this, ShowTermActivity.class);
         intent.putExtra(MAIN_ACTIVITY, term.getId());
