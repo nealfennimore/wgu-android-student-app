@@ -23,9 +23,9 @@ import edu.wgu.student.viewmodel.ShowTermViewModel;
 @TargetApi(24)
 public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<CourseCheckboxRecyclerViewAdapter.ViewHolder> {
     private ShowTermViewModel model;
-
     private List<CourseEntity> mData = new ArrayList<>();
     private LayoutInflater mInflater;
+    private ItemClickListener mClickListener;
 
     // data is passed into the constructor
     public CourseCheckboxRecyclerViewAdapter(Context context, ShowTermViewModel model) {
@@ -81,6 +81,8 @@ public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<Cour
             } else {
                 model.getSelectedCourses().add(course);
             }
+
+            if (mClickListener != null) mClickListener.onItemClick();
         }
     }
 
@@ -91,5 +93,14 @@ public class CourseCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<Cour
         return model.getSelectedCourses().stream()
                 .map( course -> course.getId() )
                 .collect(Collectors.toList());
+    }
+
+
+    public void setClickListener(ItemClickListener mClickListener) {
+        this.mClickListener = mClickListener;
+    }
+
+    public interface ItemClickListener {
+        void onItemClick();
     }
 }

@@ -66,6 +66,7 @@ public class ShowTermViewModel extends AndroidViewModel {
     public int updateTerm(TermEntity term) {
         return mDb.termDao().updateTerm(term);
     }
+    public void deleteTerm(TermEntity term ) { mDb.termDao().deleteTerm(term);}
 
     public LiveData<List<CourseEntity>> getAllCourses() { return mDb.courseDao().getAll(); }
     public LiveData<List<CourseEntity>> getSelectedCoursesForTerm(int termId) {

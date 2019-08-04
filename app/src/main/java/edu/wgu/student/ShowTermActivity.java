@@ -41,6 +41,45 @@ public class ShowTermActivity extends AppCompatActivity {
         initTerm();
         initCourses();
         initListeners();
+        setDeleteButtonEnabledState();
+    }
+
+    private void setDeleteButtonEnabledState(){
+        List<CourseEntity> courses = mViewModel.getSelectedCourses();
+        Button deleteTerm = findViewById(R.id.deleteTerm);
+        if(courses.size() > 0){
+            deleteTerm.setEnabled(false);
+        } else {
+            deleteTerm.setEnabled(true);
+        }
+    }
+
+    private void onChange(){
+        setDeleteButtonEnabledState();
+    }
+
+    private void onDelete() {
+        Executor executor = mViewModel.getExecutor();
+        Intent intent = new Intent(this, MainActivity.class);
+        mViewModel.getTerm(termId).observe( this, term -> {
+            executor.execute(new Runnable() {
+                @Override
+                public void run() {
+                    List<Integer> courseIds = mViewModel.getSelectedCourseIds();
+                    List<Integer> initialCourseIds = mViewModel.getInitialSelectedCourses();
+                    List<Integer> courseIdsToRemove = initialCourseIds.stream()
+                            .filter( courseId -> ! courseIds.contains(courseId))
+                            .collect(Collectors.toList());
+
+                    courseIdsToRemove.forEach(courseId -> {
+                        mViewModel.deleteTermCourseJoin(termId, courseId);
+                    });
+
+                    startActivity(intent);
+                    mViewModel.deleteTerm(term);
+                }
+            });
+        });
     }
 
     private void onSubmit() {
@@ -86,11 +125,18 @@ public class ShowTermActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        Button button = findViewById(R.id.updateTerm);
-        button.setOnClickListener(new View.OnClickListener(){
+        Button updateTerm = findViewById(R.id.updateTerm);
+        updateTerm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 onSubmit();
+            }
+        });
+        Button deleteTerm = findViewById(R.id.deleteTerm);
+        deleteTerm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                onDelete();
             }
         });
     }
@@ -124,11 +170,19 @@ public class ShowTermActivity extends AppCompatActivity {
 
             mViewModel.getAllCourses().observe(this, courses -> adapter.setData(courses));
         });
+        adapter.setClickListener(new CourseClicker());
         recyclerView.setAdapter(adapter);
     }
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this)
                 .get(ShowTermViewModel.class);
+    }
+
+    public class CourseClicker implements CourseCheckboxRecyclerViewAdapter.ItemClickListener{
+        @Override
+        public void onItemClick() {
+            onChange();
+        }
     }
 }
