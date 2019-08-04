@@ -13,7 +13,12 @@ import androidx.room.ForeignKey;
                         parentColumns = "id",
                         childColumns = "courseId")
         })
-public class TermCourseJoin {
+public class TermCourseJoinEntity {
     public int termId;
     public int courseId;
+
+    public TermCourseJoinEntity( int termId, int courseId ){
+        this.termId = termId;
+        this.courseId = courseId;
+    }
 }

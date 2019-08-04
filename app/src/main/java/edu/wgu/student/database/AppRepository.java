@@ -37,10 +37,27 @@ public class AppRepository {
             @Override
             public void run() {
                 Log.i("SAMPLE_DATA", "Adding in sample data");
-                mDb.mentorDao().insertMentor(new MentorEntity(1, "Neal", "99999999999", "cool@cool.com" ));
-                mDb.termDao().insertTerm(new TermEntity(1, "Term", new Date(), new Date()));
-                mDb.courseDao().insertCourse(new CourseEntity(2, "Course 2", new Date(), new Date(), CourseStatus.IN_PROGRESS));
-                mDb.assessmentDao().insertAssessment(new AssessmentEntity(1, "Assessment", AssessmentType.OBJECTIVE, new Date()));
+                MentorEntity mentor = new MentorEntity(1, "Neal", "99999999999", "cool@cool.com" );
+                TermEntity term = new TermEntity(1, "First Term", new Date(), new Date());
+                CourseEntity course = new CourseEntity(1, "Course 1", new Date(), new Date(), CourseStatus.IN_PROGRESS);
+                CourseEntity course1 = new CourseEntity(2, "Course 2", new Date(), new Date(), CourseStatus.PLANNED);
+                AssessmentEntity assessment = new AssessmentEntity(1, "Assessment", AssessmentType.OBJECTIVE, new Date());
+
+                TermCourseJoinEntity termCourseJoin = new TermCourseJoinEntity(term.getId(), course.getId());
+                CourseMentorJoinEntity courseMentorJoinEntity = new CourseMentorJoinEntity(course.getId(), mentor.getId());
+                CourseAssessmentJoinEntity courseAssessmentJoinEntity = new CourseAssessmentJoinEntity(course.getId(), assessment.getId());
+
+
+                mDb.mentorDao().insertMentor(mentor);
+                mDb.termDao().insertTerm(term);
+                mDb.courseDao().insertCourse(course);
+                mDb.courseDao().insertCourse(course1);
+                mDb.assessmentDao().insertAssessment(assessment);
+
+                mDb.termCourseJoinDao().insert(termCourseJoin);
+                mDb.courseMentorJoinDao().insert(courseMentorJoinEntity);
+                mDb.courseAssessmentJoinDao().insert(courseAssessmentJoinEntity);
+
                 Log.i("SAMPLE_DATA", "Done adding sample data");
 
                 Log.i("MENTOR COUNT", Integer.toString(mDb.mentorDao().getCount()));

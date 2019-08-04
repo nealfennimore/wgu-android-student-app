@@ -9,7 +9,7 @@ import java.util.List;
 @Dao
 public interface CourseAssessmentJoinDao {
     @Insert
-    void insert(CourseAssessmentJoin courseAssessmentJoin);
+    void insert(CourseAssessmentJoinEntity courseAssessmentJoin);
 
     @Query("SELECT * FROM course " +
             "INNER JOIN course_assessment_join " +
