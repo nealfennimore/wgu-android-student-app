@@ -34,6 +34,9 @@ public interface TermDao {
     @Query("DELETE FROM term")
     int deleteAll();
 
+    @Query("DELETE FROM term WHERE id = :id")
+    void deleteById(int id);
+
     @Query("SELECT COUNT(*) FROM term")
     int getCount();
 }

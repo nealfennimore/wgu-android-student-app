@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -75,8 +76,11 @@ public class ShowTermActivity extends AppCompatActivity {
                         mViewModel.deleteTermCourseJoin(termId, courseId);
                     });
 
+                    mViewModel.setSelectedCourses(new ArrayList<>());
+                    mViewModel.setInitialSelectedCourses(new ArrayList<>());
+
+                    mViewModel.deleteTermById(termId);
                     startActivity(intent);
-                    mViewModel.deleteTerm(term);
                 }
             });
         });
@@ -145,6 +149,8 @@ public class ShowTermActivity extends AppCompatActivity {
         Intent intent = getIntent();
         termId = intent.getIntExtra(MainActivity.MAIN_ACTIVITY, 0);
         mViewModel.getTerm(termId).observe(this, term -> {
+            if(term == null) return;
+
             TextView textView = findViewById(R.id.termName);
             textView.setText(term.getTitle());
 
