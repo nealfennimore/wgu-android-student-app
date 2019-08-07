@@ -17,10 +17,8 @@ import java.util.concurrent.Executor;
 
 import edu.wgu.student.database.AssessmentEntity;
 import edu.wgu.student.database.AssessmentType;
-import edu.wgu.student.database.TermEntity;
 import edu.wgu.student.utilities.DateHelper;
 import edu.wgu.student.viewmodel.CreateAssessmentViewModel;
-import edu.wgu.student.viewmodel.CreateTermViewModel;
 
 public class CreateAssessmentActivity extends AppCompatActivity {
     private CreateAssessmentViewModel mViewModel;
@@ -35,7 +33,7 @@ public class CreateAssessmentActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        Button button = findViewById(R.id.createAssessment);
+        Button button = findViewById(R.id.updateAssessment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -22,4 +22,9 @@ public interface CourseAssessmentJoinDao {
             "ON assessment.id=course_assessment_join.assessmentId " +
             "WHERE course_assessment_join.courseId=:courseId")
     List<AssessmentEntity> getAssessmentsForCourse(final int courseId);
+
+    @Query("DELETE FROM course_assessment_join " +
+            "WHERE course_assessment_join.courseId=:courseId " +
+            "AND course_assessment_join.assessmentId=:assessmentId")
+    void delete(final int courseId, final int assessmentId);
 }

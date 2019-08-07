@@ -11,7 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateAssessmentActivity" android:parentActivityName=".MainActivity" android:label="Create Assessment"></activity>
+        <activity android:name=".ShowAssessmentActivity"></activity>
+        <activity
+            android:name=".CreateAssessmentActivity"
+            android:label="Create Assessment"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".CreateTermActivity"
             android:label="Create Term"

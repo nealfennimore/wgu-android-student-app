@@ -30,7 +30,7 @@ public class CreateTermActivity extends AppCompatActivity {
     }
 
     private void initListeners() {
-        Button button = findViewById(R.id.createAssessment);
+        Button button = findViewById(R.id.updateAssessment);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -96,6 +96,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void onAssessmentClick(AssessmentEntity assessment) {
+        Intent intent = new Intent(this, ShowAssessmentActivity.class);
+        intent.putExtra(MAIN_ACTIVITY, assessment.getId());
+        startActivity(intent);
+    }
+
     public class TermClicker implements TermRecyclerViewAdapter.ItemClickListener{
         @Override
         public void onItemClick(View view, TermEntity term, int position) {
@@ -106,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
     public class AssessmentClicker implements AssessmentRecyclerViewAdapter.ItemClickListener{
         @Override
         public void onItemClick(View view, AssessmentEntity assessment, int position) {
-
+            onAssessmentClick(assessment);
         }
     }
 }
