@@ -11,11 +11,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateTermActivity" android:parentActivityName=".MainActivity" android:label="Create Term"></activity>
+        <activity android:name=".CreateAssessmentActivity" android:parentActivityName=".MainActivity" android:label="Create Assessment"></activity>
+        <activity
+            android:name=".CreateTermActivity"
+            android:label="Create Term"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".ShowTermActivity"
-            android:parentActivityName=".MainActivity"
-            android:label="View Term" />
+            android:label="View Term"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

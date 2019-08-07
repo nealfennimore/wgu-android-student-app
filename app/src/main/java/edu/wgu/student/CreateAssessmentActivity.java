@@ -7,23 +7,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.concurrent.Executor;
 
+import edu.wgu.student.database.AssessmentEntity;
+import edu.wgu.student.database.AssessmentType;
 import edu.wgu.student.database.TermEntity;
 import edu.wgu.student.utilities.DateHelper;
+import edu.wgu.student.viewmodel.CreateAssessmentViewModel;
 import edu.wgu.student.viewmodel.CreateTermViewModel;
 
-public class CreateTermActivity extends AppCompatActivity {
-    private CreateTermViewModel mViewModel;
+public class CreateAssessmentActivity extends AppCompatActivity {
+    private CreateAssessmentViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_term);
+        setContentView(R.layout.activity_create_assessment);
 
         initViewModel();
         initListeners();
@@ -47,21 +52,24 @@ public class CreateTermActivity extends AppCompatActivity {
         Executor executor = mViewModel.getExecutor();
         Intent intent = new Intent(this, MainActivity.class);
 
-        TextView tvTermName = findViewById(R.id.termName);
-        String termName = tvTermName.getText().toString();
+        TextView tvTitle = findViewById(R.id.title);
+        String title = tvTitle.getText().toString();
 
-        TextView tvStartDate = findViewById(R.id.startDate);
-        TextView tvEndDate = findViewById(R.id.endDate);
+        RadioGroup radioGroup = findViewById(R.id.assessmentType);
+        int selectedId = radioGroup.getCheckedRadioButtonId();
+        RadioButton radio = findViewById(selectedId);
+        String selected = radio.getText().toString().toUpperCase();
+        AssessmentType type = AssessmentType.valueOf(selected);
 
-        Date startDate = DateHelper.toDate(tvStartDate.getText().toString());
-        Date endDate = DateHelper.toDate(tvEndDate.getText().toString());
+        TextView tvDueDate = findViewById(R.id.dueDate);
+        Date dueDate = DateHelper.toDate(tvDueDate.getText().toString());
 
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                int id = mViewModel.getTermCount() + 1;
-                TermEntity term = new TermEntity(id, termName, startDate, endDate);
-                mViewModel.insertTerm(term);
+                int id = mViewModel.getAssessmentCount() + 1;
+                AssessmentEntity assessment = new AssessmentEntity(id, title, type, dueDate);
+                mViewModel.insertAssessment(assessment);
                 startActivity(intent);
             }
         });
@@ -69,6 +77,6 @@ public class CreateTermActivity extends AppCompatActivity {
 
     private void initViewModel() {
         mViewModel = ViewModelProviders.of(this)
-                .get(CreateTermViewModel.class);
+                .get(CreateAssessmentViewModel.class);
     }
 }
