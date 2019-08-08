@@ -17,6 +17,10 @@
             android:label="Create Assessment"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".CreateCourseActivity"
+            android:label="Create Course"
+            android:parentActivityName=".MainActivity" />
+        <activity
             android:name=".CreateTermActivity"
             android:label="Create Term"
             android:parentActivityName=".MainActivity" />

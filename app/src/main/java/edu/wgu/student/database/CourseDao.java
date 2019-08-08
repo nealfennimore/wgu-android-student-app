@@ -26,7 +26,7 @@ public interface CourseDao {
     void deleteCourse( CourseEntity course );
 
     @Query("SELECT * FROM course WHERE id = :id")
-    CourseEntity getCourseById(int id);
+    LiveData<CourseEntity> getCourseById(int id);
 
     @Query("SELECT * FROM course")
     LiveData<List<CourseEntity>> getAll();
