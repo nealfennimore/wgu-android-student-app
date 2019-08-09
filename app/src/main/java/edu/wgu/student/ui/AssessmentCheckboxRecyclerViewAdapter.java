@@ -49,7 +49,6 @@ public class AssessmentCheckboxRecyclerViewAdapter extends RecyclerView.Adapter<
     public void onBindViewHolder(ViewHolder holder, int position) {
         AssessmentEntity assessment = mData.get(position);
         holder.checkboxView.setText(assessment.getTitle());
-        Log.i("ISJISJ", String.valueOf(assessment.getId()));
         holder.checkboxView.setChecked(model.getInitialSelectedAssessments().contains(assessment.getId()));
     }
 

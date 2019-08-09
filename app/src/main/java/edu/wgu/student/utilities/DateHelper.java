@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class DateHelper {
     static final DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+    static final DateFormat sqlFormatter = new SimpleDateFormat("yyyyMMdd");
 
     static public Date toDate(String date){
         try {
@@ -20,4 +21,6 @@ public class DateHelper {
     static public String toFormattedString(Date date){
         return formatter.format(date);
     }
+
+    static public String toSQLString(Date date) { return sqlFormatter.format(date); }
 }

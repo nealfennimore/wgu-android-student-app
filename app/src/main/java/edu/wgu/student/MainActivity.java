@@ -1,5 +1,6 @@
 package edu.wgu.student;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -27,6 +29,7 @@ import edu.wgu.student.ui.CourseRecyclerViewAdapter;
 import edu.wgu.student.ui.TermRecyclerViewAdapter;
 import edu.wgu.student.viewmodel.MainViewModel;
 
+@TargetApi(24)
 public class MainActivity extends AppCompatActivity {
     public static final String MAIN_ACTIVITY = "edu.wgu.student.MAIN_ACTIVITY";
 
@@ -46,18 +49,28 @@ public class MainActivity extends AppCompatActivity {
         initAssessmentViewRecycler();
         initEventListeners();
 
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-        alertDialog.setTitle("Alert");
-        alertDialog.setMessage("Alert message to be shown");
-        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-        alertDialog.show();
-
 //        initNotificationListeners();
+
+        initAlerts();
+    }
+
+    private void initAlerts() {
+        mViewModel.getCoursesWithAlertsForToday().observe( this, courses -> {
+            courses.forEach( courseEntity -> {
+                String happening = courseEntity.isStartDateAlert() ? "starting" : "ending";
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle(courseEntity.getTitle());
+                alertDialog.setMessage(courseEntity.getTitle() + " is " + happening + " today." );
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            });
+        });
+
     }
 
     private void initNotificationListeners() {
