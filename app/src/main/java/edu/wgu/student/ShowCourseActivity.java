@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -172,6 +174,23 @@ public class ShowCourseActivity extends AppCompatActivity {
                 onDelete();
             }
         });
+        FloatingActionButton share = findViewById(R.id.share);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onShare();
+            }
+        });
+    }
+
+    private void onShare(){
+        TextView tvNote = findViewById(R.id.note);
+        String note = tvNote.getText().toString();
+
+        Intent intent = new Intent(); intent.setAction(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, note );
+        startActivity(Intent.createChooser(intent, "Share via"));
     }
 
     private void initCourse() {
