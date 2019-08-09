@@ -38,7 +38,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="Terms" />
+            android:label="Home" />
     </application>
 
 </manifest>
