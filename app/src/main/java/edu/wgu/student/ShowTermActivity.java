@@ -42,7 +42,6 @@ public class ShowTermActivity extends AppCompatActivity {
         initTerm();
         initCourses();
         initListeners();
-        setDeleteButtonEnabledState();
     }
 
     private void setDeleteButtonEnabledState(){
@@ -175,6 +174,8 @@ public class ShowTermActivity extends AppCompatActivity {
             mViewModel.setSelectedCourses(selectedCourses);
 
             mViewModel.getAllCourses().observe(this, courses -> adapter.setData(courses));
+
+            setDeleteButtonEnabledState();
         });
         adapter.setClickListener(new CourseClicker());
         recyclerView.setAdapter(adapter);

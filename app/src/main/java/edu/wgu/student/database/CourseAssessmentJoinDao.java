@@ -1,5 +1,6 @@
 package edu.wgu.student.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -21,7 +22,7 @@ public interface CourseAssessmentJoinDao {
             "INNER JOIN course_assessment_join " +
             "ON assessment.id=course_assessment_join.assessmentId " +
             "WHERE course_assessment_join.courseId=:courseId")
-    List<AssessmentEntity> getAssessmentsForCourse(final int courseId);
+    LiveData<List<AssessmentEntity>> getAssessmentsForCourse(final int courseId);
 
     @Query("DELETE FROM course_assessment_join " +
             "WHERE course_assessment_join.courseId=:courseId " +

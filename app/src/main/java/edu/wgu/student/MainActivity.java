@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onCourseClick(CourseEntity course) {
-        Intent intent = new Intent(this, ShowTermActivity.class);
+        Intent intent = new Intent(this, ShowCourseActivity.class);
         intent.putExtra(MAIN_ACTIVITY, course.getId());
         startActivity(intent);
     }
