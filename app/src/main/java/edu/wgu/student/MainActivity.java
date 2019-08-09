@@ -3,6 +3,7 @@ package edu.wgu.student;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initEventListeners() {
-        FloatingActionButton goToCreateTerm = findViewById(R.id.goToCreateTerm);
+        Button goToCreateTerm = findViewById(R.id.goToCreateTerm);
         goToCreateTerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton goToCreateAssessment = findViewById(R.id.goToCreateAssessment);
+        Button goToCreateAssessment = findViewById(R.id.goToCreateAssessment);
         goToCreateAssessment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton goToCreateCourse = findViewById(R.id.goToCreateCourse);
+        Button goToCreateCourse = findViewById(R.id.goToCreateCourse);
         goToCreateCourse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

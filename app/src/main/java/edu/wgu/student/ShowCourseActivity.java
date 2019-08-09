@@ -41,6 +41,8 @@ public class ShowCourseActivity extends AppCompatActivity {
         initViewModel();
         initCourse();
         initAssessments();
+        initTerms();
+        initMentors();
         initListeners();
     }
 
@@ -68,15 +70,29 @@ public class ShowCourseActivity extends AppCompatActivity {
                     List<Integer> assessmentIds = mViewModel.getSelectedAssessmentIds();
                     List<Integer> initialAssessmentIds = mViewModel.getInitialSelectedAssessments();
                     List<Integer> assessmentIdsToRemove = initialAssessmentIds.stream()
-                            .filter( courseId -> ! assessmentIds.contains(courseId))
+                            .filter( assessmentId -> ! assessmentIds.contains(assessmentId))
                             .collect(Collectors.toList());
+
+                    Log.i("COURSE_ID", String.valueOf(courseId));
 
                     assessmentIdsToRemove.forEach(assessmentId -> {
                         mViewModel.deleteCourseAssessmentJoin(courseId, assessmentId);
                     });
 
+                    List<Integer> termsToDisassociate = mViewModel.getAssociatedTermIds();
+                    termsToDisassociate.forEach( termId -> {
+                        mViewModel.deleteTermCourseJoin(termId, courseId);
+                    });
+
+                    List<Integer> mentorsToDisassociate = mViewModel.getAssociatedMentorIds();
+                    mentorsToDisassociate.forEach( mentorId -> {
+                        mViewModel.deleteCourseMentorJoin(courseId, mentorId);
+                    });
+
                     mViewModel.setSelectedAssessments(new ArrayList<>());
                     mViewModel.setInitialSelectedAssessments(new ArrayList<>());
+                    mViewModel.setAssociatedTerms(new ArrayList<>());
+                    mViewModel.setAssociatedMentors(new ArrayList<>());
 
                     mViewModel.deleteCourseById(courseId);
                     startActivity(intent);
@@ -116,19 +132,19 @@ public class ShowCourseActivity extends AppCompatActivity {
                 List<Integer> initialAssessmentIds = mViewModel.getInitialSelectedAssessments();
 
                 List<Integer> assessmentIdsToAdd = assessmentIds.stream()
-                    .filter( courseId -> ! initialAssessmentIds.contains(courseId))
+                    .filter( assessmentId -> ! initialAssessmentIds.contains(assessmentId))
                     .collect(Collectors.toList());
 
                 List<Integer> assessmentIdsToRemove = initialAssessmentIds.stream()
-                        .filter( courseId -> ! assessmentIds.contains(courseId))
+                        .filter( assessmentId -> ! assessmentIds.contains(assessmentId))
                         .collect(Collectors.toList());
 
                 assessmentIdsToAdd.forEach(assessmentId -> {
-                    mViewModel.insertCourseAssessmentJoin(assessmentId, assessmentId);
+                    mViewModel.insertCourseAssessmentJoin(courseId, assessmentId);
                 });
 
                 assessmentIdsToRemove.forEach(assessmentId -> {
-                    mViewModel.deleteCourseAssessmentJoin(assessmentId, assessmentId);
+                    mViewModel.deleteCourseAssessmentJoin(courseId, assessmentId);
                 });
 
                 startActivity(intent);
@@ -199,14 +215,24 @@ public class ShowCourseActivity extends AppCompatActivity {
         mViewModel.getSelectedAssessmentsForCourse(courseId).observe(this, selectedAssessments -> {
             mViewModel.setInitialSelectedAssessments(selectedAssessments);
             mViewModel.setSelectedAssessments(selectedAssessments);
-
-            Log.i("SELECTE ASSESSMENTS", String.valueOf(selectedAssessments.size()));
             mViewModel.getAllAssessments().observe(this, assessments -> adapter.setData(assessments));
 
             setDeleteButtonEnabledState();
         });
         adapter.setClickListener(new CourseClicker());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void initTerms() {
+        mViewModel.getTermsForCourse(courseId).observe( this, terms -> {
+            mViewModel.setAssociatedTerms(terms);
+        });
+    }
+
+    private void initMentors(){
+        mViewModel.getMentorsForCourse(courseId).observe( this, mentors -> {
+            mViewModel.setAssociatedMentors(mentors);
+        });
     }
 
     private void initViewModel() {

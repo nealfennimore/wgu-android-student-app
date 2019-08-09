@@ -3,13 +3,14 @@ package edu.wgu.student.database;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import java.util.List;
 
 @Dao
 public interface CourseAssessmentJoinDao {
-    @Insert
+    @Insert( onConflict = OnConflictStrategy.REPLACE)
     void insert(CourseAssessmentJoinEntity courseAssessmentJoin);
 
     @Query("SELECT * FROM course " +
@@ -28,4 +29,7 @@ public interface CourseAssessmentJoinDao {
             "WHERE course_assessment_join.courseId=:courseId " +
             "AND course_assessment_join.assessmentId=:assessmentId")
     void delete(final int courseId, final int assessmentId);
+
+    @Query("DELETE FROM course_assessment_join")
+    int deleteAll();
 }

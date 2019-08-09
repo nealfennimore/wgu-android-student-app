@@ -27,6 +27,7 @@ public class MainViewModel extends AndroidViewModel {
         mDb = mRepo.getDB();
         executor = mRepo.getExecutor();
 
+//        mRepo.removeAll();
 //        mRepo.addSampleData();
     }
 

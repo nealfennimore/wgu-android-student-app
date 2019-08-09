@@ -68,4 +68,16 @@ public class AppRepository {
             }
         });
     }
+
+    public void removeAll(){
+//        mDb.mentorDao().deleteAll();
+//        mDb.termDao().deleteAll();
+//        mDb.courseDao().deleteAll();
+//        mDb.courseDao().deleteAll();
+//        mDb.assessmentDao().deleteAll();
+
+        mDb.termCourseJoinDao().deleteAll();
+        mDb.courseMentorJoinDao().deleteAll();
+        mDb.courseAssessmentJoinDao().deleteAll();
+    }
 }
