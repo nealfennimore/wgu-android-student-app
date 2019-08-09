@@ -54,6 +54,9 @@ public class CreateCourseActivity extends AppCompatActivity {
         TextView tvTermName = findViewById(R.id.courseName);
         String courseName = tvTermName.getText().toString();
 
+        TextView tvNote = findViewById(R.id.note);
+        String note = tvNote.getText().toString();
+
         TextView tvStartDate = findViewById(R.id.startDate);
         TextView tvEndDate = findViewById(R.id.endDate);
 
@@ -73,7 +76,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             @Override
             public void run() {
                 int id = mViewModel.getCourseCount() + 1;
-                CourseEntity course = new CourseEntity(id, courseName, startDate, endDate, status);
+                CourseEntity course = new CourseEntity(id, courseName, startDate, endDate, status, note);
                 mViewModel.insertCourse(course);
                 startActivity(intent);
             }

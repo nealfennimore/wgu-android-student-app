@@ -18,17 +18,19 @@ public class CourseEntity {
     private Date startDate;
     private Date endDate;
     private CourseStatus status;
+    private String note;
 
     @Ignore
     public CourseEntity() {
     }
 
-    public CourseEntity(int id, String title, Date startDate, Date endDate, CourseStatus status) {
+    public CourseEntity(int id, String title, Date startDate, Date endDate, CourseStatus status, String note) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
+        this.note = note;
     }
 
     public int getId() {
@@ -93,6 +95,14 @@ public class CourseEntity {
      */
     public void setStatus(CourseStatus status) {
         this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 
     @Override

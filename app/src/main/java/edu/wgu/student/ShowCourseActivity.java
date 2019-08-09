@@ -108,6 +108,9 @@ public class ShowCourseActivity extends AppCompatActivity {
         TextView tvCourseName = findViewById(R.id.courseName);
         String courseName = tvCourseName.getText().toString();
 
+        TextView tvNote = findViewById(R.id.note);
+        String note = tvNote.getText().toString();
+
         TextView tvStartDate = findViewById(R.id.startDate);
         TextView tvEndDate = findViewById(R.id.endDate);
 
@@ -123,10 +126,12 @@ public class ShowCourseActivity extends AppCompatActivity {
         }
         CourseStatus status = CourseStatus.valueOf(selected);
 
+        Log.i("NOTE", note);
+
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                CourseEntity course = new CourseEntity(courseId, courseName, startDate, endDate, status);
+                CourseEntity course = new CourseEntity(courseId, courseName, startDate, endDate, status, note);
                 mViewModel.updateCourse(course);
                 List<Integer> assessmentIds = mViewModel.getSelectedAssessmentIds();
                 List<Integer> initialAssessmentIds = mViewModel.getInitialSelectedAssessments();
@@ -177,6 +182,9 @@ public class ShowCourseActivity extends AppCompatActivity {
 
             TextView textView = findViewById(R.id.courseName);
             textView.setText(course.getTitle());
+
+            TextView note = findViewById(R.id.note);
+            note.setText(course.getNote());
 
             TextView startDate = findViewById(R.id.startDate);
             String formattedStartDate = DateHelper.toFormattedString(course.getStartDate());
