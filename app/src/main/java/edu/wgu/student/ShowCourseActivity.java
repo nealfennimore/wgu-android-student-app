@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -75,8 +76,6 @@ public class ShowCourseActivity extends AppCompatActivity {
                             .filter( assessmentId -> ! assessmentIds.contains(assessmentId))
                             .collect(Collectors.toList());
 
-                    Log.i("COURSE_ID", String.valueOf(courseId));
-
                     assessmentIdsToRemove.forEach(assessmentId -> {
                         mViewModel.deleteCourseAssessmentJoin(courseId, assessmentId);
                     });
@@ -128,12 +127,16 @@ public class ShowCourseActivity extends AppCompatActivity {
         }
         CourseStatus status = CourseStatus.valueOf(selected);
 
-        Log.i("NOTE", note);
+        CheckBox alertStartDate = findViewById(R.id.alertStartDate);
+        CheckBox alertEndDate = findViewById(R.id.alertEndDate);
+
+        Log.i("START CHECKED", String.valueOf(alertStartDate.isChecked()));
+        Log.i("END CHECKED", String.valueOf(alertEndDate.isChecked()));
 
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                CourseEntity course = new CourseEntity(courseId, courseName, startDate, endDate, status, note);
+                CourseEntity course = new CourseEntity(courseId, courseName, startDate, endDate, status, note, alertStartDate.isChecked(), alertEndDate.isChecked());
                 mViewModel.updateCourse(course);
                 List<Integer> assessmentIds = mViewModel.getSelectedAssessmentIds();
                 List<Integer> initialAssessmentIds = mViewModel.getInitialSelectedAssessments();
@@ -230,6 +233,12 @@ public class ShowCourseActivity extends AppCompatActivity {
                     break;
             }
             button.setChecked(true);
+
+            CheckBox alertStartDate = findViewById(R.id.alertStartDate);
+            alertStartDate.setChecked(course.isStartDateAlert());
+
+            CheckBox alertEndDate = findViewById(R.id.alertEndDate);
+            alertEndDate.setChecked(course.isEndDateAlert());
         } );
     }
 

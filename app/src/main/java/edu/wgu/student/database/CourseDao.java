@@ -39,4 +39,11 @@ public interface CourseDao {
 
     @Query("SELECT COUNT(*) FROM course")
     int getCount();
+
+    @Query("SELECT * FROM course "
+            + "WHERE ( startDateAlert = 1 OR endDateAlert = 1 )"
+            + "AND ( startDate BETWEEN date(:from) AND date(:to)"
+            + "OR endDate BETWEEN date(:from) AND date(:to) )"
+    )
+    LiveData<List<CourseEntity>> getActiveCourseAlertsByDateRange(String from, String to );
 }

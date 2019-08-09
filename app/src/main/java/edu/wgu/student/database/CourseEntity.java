@@ -19,18 +19,22 @@ public class CourseEntity {
     private Date endDate;
     private CourseStatus status;
     private String note;
+    private boolean startDateAlert;
+    private boolean endDateAlert;
 
     @Ignore
     public CourseEntity() {
     }
 
-    public CourseEntity(int id, String title, Date startDate, Date endDate, CourseStatus status, String note) {
+    public CourseEntity(int id, String title, Date startDate, Date endDate, CourseStatus status, String note, boolean startDateAlert, boolean endDateAlert) {
         this.id = id;
         this.title = title;
         this.startDate = startDate;
         this.endDate = endDate;
         this.status = status;
         this.note = note;
+        this.startDateAlert = startDateAlert;
+        this.endDateAlert = endDateAlert;
     }
 
     public int getId() {
@@ -103,6 +107,22 @@ public class CourseEntity {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public boolean isStartDateAlert() {
+        return startDateAlert;
+    }
+
+    public void setStartDateAlert(boolean startDateAlert) {
+        this.startDateAlert = startDateAlert;
+    }
+
+    public boolean isEndDateAlert() {
+        return endDateAlert;
+    }
+
+    public void setEndDateAlert(boolean endDateAlert) {
+        this.endDateAlert = endDateAlert;
     }
 
     @Override

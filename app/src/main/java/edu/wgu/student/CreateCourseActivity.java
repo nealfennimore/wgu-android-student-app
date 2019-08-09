@@ -76,7 +76,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             @Override
             public void run() {
                 int id = mViewModel.getCourseCount() + 1;
-                CourseEntity course = new CourseEntity(id, courseName, startDate, endDate, status, note);
+                CourseEntity course = new CourseEntity(id, courseName, startDate, endDate, status, note, false, false);
                 mViewModel.insertCourse(course);
                 startActivity(intent);
             }
