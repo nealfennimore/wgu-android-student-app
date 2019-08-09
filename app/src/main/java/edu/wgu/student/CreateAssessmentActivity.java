@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -66,7 +67,7 @@ public class CreateAssessmentActivity extends AppCompatActivity {
             @Override
             public void run() {
                 int id = mViewModel.getAssessmentCount() + 1;
-                AssessmentEntity assessment = new AssessmentEntity(id, title, type, dueDate);
+                AssessmentEntity assessment = new AssessmentEntity(id, title, type, dueDate, false);
                 mViewModel.insertAssessment(assessment);
                 startActivity(intent);
             }

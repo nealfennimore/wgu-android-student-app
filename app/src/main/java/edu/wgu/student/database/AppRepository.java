@@ -42,7 +42,7 @@ public class AppRepository {
                 TermEntity term = new TermEntity(1, "First Term", new Date(), new Date());
                 CourseEntity course = new CourseEntity(1, "Course 1", new Date(), new Date(), CourseStatus.IN_PROGRESS, "", false, false);
                 CourseEntity course1 = new CourseEntity(2, "Course 2", new Date(), new Date(), CourseStatus.PLANNED, "", false,false);
-                AssessmentEntity assessment = new AssessmentEntity(1, "Assessment", AssessmentType.OBJECTIVE, new Date());
+                AssessmentEntity assessment = new AssessmentEntity(1, "Assessment", AssessmentType.OBJECTIVE, new Date(), false);
 
                 TermCourseJoinEntity termCourseJoin = new TermCourseJoinEntity(term.getId(), course.getId());
                 CourseMentorJoinEntity courseMentorJoinEntity = new CourseMentorJoinEntity(course.getId(), mentor.getId());

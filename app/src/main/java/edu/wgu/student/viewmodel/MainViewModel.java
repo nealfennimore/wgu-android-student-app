@@ -63,4 +63,17 @@ public class MainViewModel extends AndroidViewModel {
 
         return mDb.courseDao().getActiveCourseAlertsByDateRange(from, to);
     }
+
+    public LiveData<List<AssessmentEntity>> getAssessmentsWithAlertsForToday() {
+        LocalDateTime startOfDay = LocalDate.now().atTime(LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDate.now().atTime(LocalTime.MAX);
+
+        Date start = Date.from( startOfDay.atZone( ZoneId.systemDefault()).toInstant());
+        Date end = Date.from( endOfDay.atZone( ZoneId.systemDefault()).toInstant());
+
+        Long from = DateConverter.toTimestamp(start);
+        Long to = DateConverter.toTimestamp(end);
+
+        return mDb.assessmentDao().getDueDateAlertsByDateRange(from, to);
+    }
 }

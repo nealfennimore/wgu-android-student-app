@@ -57,10 +57,33 @@ public class MainActivity extends AppCompatActivity {
     private void initAlerts() {
         mViewModel.getCoursesWithAlertsForToday().observe( this, courses -> {
             courses.forEach( courseEntity -> {
+                if ( ! courseEntity.isStartDateAlert() && ! courseEntity.isEndDateAlert() ){
+                    return;
+                }
+
                 String happening = courseEntity.isStartDateAlert() ? "starting" : "ending";
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                 alertDialog.setTitle(courseEntity.getTitle());
                 alertDialog.setMessage(courseEntity.getTitle() + " is " + happening + " today." );
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+            });
+        });
+
+        mViewModel.getAssessmentsWithAlertsForToday().observe( this, assessments -> {
+            assessments.forEach( assessmentEntity -> {
+                if ( ! assessmentEntity.isDueDateAlert() ){
+                    return;
+                }
+
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                alertDialog.setTitle(assessmentEntity.getTitle());
+                alertDialog.setMessage(assessmentEntity.getTitle() + " is due today." );
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

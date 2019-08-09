@@ -39,4 +39,10 @@ public interface AssessmentDao {
 
     @Query("SELECT COUNT(*) FROM assessment")
     int getCount();
+
+    @Query("SELECT * FROM assessment "
+            + "WHERE dueDateAlert = 1 "
+            + "AND dueDate BETWEEN :from AND :to"
+    )
+    LiveData<List<AssessmentEntity>> getDueDateAlertsByDateRange(Long from, Long to );
 }

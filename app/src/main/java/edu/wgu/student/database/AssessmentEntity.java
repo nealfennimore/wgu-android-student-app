@@ -16,16 +16,18 @@ public class AssessmentEntity {
     private String title;
     private AssessmentType type;
     private Date dueDate;
+    private boolean dueDateAlert;
 
     @Ignore
     public AssessmentEntity() {
     }
 
-    public AssessmentEntity(int id, String title, AssessmentType type, Date dueDate){
+    public AssessmentEntity(int id, String title, AssessmentType type, Date dueDate, boolean dueDateAlert){
         this.id = id;
         this.title = title;
         this.type = type;
         this.dueDate = dueDate;
+        this.dueDateAlert = dueDateAlert;
     }
 
     public int getId() {
@@ -76,6 +78,14 @@ public class AssessmentEntity {
      */
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public boolean isDueDateAlert() {
+        return dueDateAlert;
+    }
+
+    public void setDueDateAlert(boolean dueDateAlert) {
+        this.dueDateAlert = dueDateAlert;
     }
 
     @Override

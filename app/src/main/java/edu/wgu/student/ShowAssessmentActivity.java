@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -85,10 +86,12 @@ public class ShowAssessmentActivity extends AppCompatActivity {
         TextView tvDueDate = findViewById(R.id.dueDate);
         Date dueDate = DateHelper.toDate(tvDueDate.getText().toString());
 
+        CheckBox alertDueDate = findViewById(R.id.alertDueDate);
+
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                AssessmentEntity assessment = new AssessmentEntity(assessmentId, title, type, dueDate);
+                AssessmentEntity assessment = new AssessmentEntity(assessmentId, title, type, dueDate, alertDueDate.isChecked());
                 mViewModel.updateAssessment(assessment);
 
                 startActivity(intent);
@@ -134,6 +137,9 @@ public class ShowAssessmentActivity extends AppCompatActivity {
                 button = findViewById(R.id.performance);
             }
             button.setChecked(true);
+
+            CheckBox alertDueDate = findViewById(R.id.alertDueDate);
+            alertDueDate.setChecked(assessment.isDueDateAlert());
         } );
     }
 
